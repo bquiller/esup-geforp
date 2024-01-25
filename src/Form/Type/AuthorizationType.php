@@ -36,7 +36,7 @@ class AuthorizationType extends AbstractType
                 'label' => 'Motif de refus',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Vous devez expliquer les raisons pour lesquelles vous émettez un avis défavorable à cette demande de formation.'
+                    'placeholder' => 'Vous devez expliquer les raisons pour lesquelles vous émettez cet avis à cette demande de formation.'
                 )
             ));
 

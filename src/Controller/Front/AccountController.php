@@ -65,6 +65,8 @@ class AccountController extends AbstractController
 
         // Récupération des attributs Shibboleth pour mise à jour du profil
         $shibbolethAttributes = $this->getUser()->getCredentials();
+	// BRICE pour debug shib
+	// var_dump($shibbolethAttributes);
 
         //$trainee = $this->getUser();
         $userEmail = $this->getUser()->getCredentials()['mail'];
@@ -250,8 +252,9 @@ class AccountController extends AbstractController
                     $pos = stripos($spCorp, "{NCORPS}");
                     if ($pos !== false) {
                         $corps = ltrim($spCorp, "{NCORPS}");
-                        if (ctype_digit($corps))
-                            $corps = (int)$corps;
+			// BRICE : pour les corps commencant par 0
+                        // if (ctype_digit($corps))
+                            // $corps = (int)$corps;
                         $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                             array('corps' => $corps)
                         );
@@ -293,8 +296,9 @@ class AccountController extends AbstractController
                     $pos = stripos($spCorp, "{NCORPS}");
                     if ($pos !== false) {
                         $corps = ltrim($spCorp, "{NCORPS}");
-                        if (ctype_digit($corps))
-                            $corps = (int)$corps;
+		    	// BRICE : ne fonctionne pas pour les corps commencant par 0
+                        //if (ctype_digit($corps))
+                            // $corps = (int)$corps;
                         $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                             array('corps' => $corps)
                         );
@@ -311,6 +315,8 @@ class AccountController extends AbstractController
 
             // Mise à jour du profil en base de données
             $em = $doctrine->getManager();
+	    // BRICE : ajout pour update 
+	    $em->persist($trainee);
             $em->flush();
             // redirect user to registrations pages
             //$url = $this->generateUrl('front.account.registrations');
@@ -393,7 +399,9 @@ class AccountController extends AbstractController
             $shibbolethAttributes['primary-affiliation'] = "employee";
         }
         // on teste si biatss : si oui, supérieur hiérarchique obligatoire dans le formulaire
-        $flagSupRequired = false;
+	// BRICE : A unimes, le sup est obligatoire pour tous !
+        $flagSupRequired = true;
+        // $flagSupRequired = false;
         if ($shibbolethAttributes['primary-affiliation'] == "employee") {
             $flagSupRequired = true;
         }
@@ -514,8 +522,9 @@ class AccountController extends AbstractController
                 $pos = stripos($spCorp, "{NCORPS}");
                 if ($pos !== false) {
                     $corps = ltrim($spCorp, "{NCORPS}");
-                    if (ctype_digit($corps))
-                        $corps = (int)$corps;
+		    // BRICE : pour les corps commencant par 0
+                    // if (ctype_digit($corps))
+                        // $corps = (int)$corps;
                     $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                         array('corps' => $corps)
                     );
@@ -556,9 +565,10 @@ class AccountController extends AbstractController
             foreach($spCorps as $spCorp) {
                 $pos = stripos($spCorp, "{NCORPS}");
                 if ($pos !== false) {
-                    $corps = ltrim($spCorp, "{NCORPS}");
-                    if (ctype_digit($corps))
-                        $corps = (int)$corps;
+		    $corps = ltrim($spCorp, "{NCORPS}");
+		    // BRICE 
+                    //if (ctype_digit($corps))
+                        //$corps = (int)$corps;
                     $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                         array('corps' => $corps)
                     );

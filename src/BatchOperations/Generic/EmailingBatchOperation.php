@@ -202,7 +202,12 @@ class EmailingBatchOperation extends AbstractBatchOperation
                     // Dans le cas des stagiaires
                     if ((get_parent_class($entity) === 'App\Entity\Core\AbstractTrainee')||(get_parent_class($entity) === 'App\Entity\Core\AbstractInscription')) {
                         $flagSup = 0;
-                        if ($hrpa->emailSup != null) {
+			var_dump($entity);
+			exit();
+			// BRICE : ne pas tout envoyer au N+1
+			if ($hrpa->emailSup != null && ($subjectR=="Statut d’inscription : Accepté" 
+				|| $subjectR=="Statut d’inscription : Attente de validation" 
+				|| $subjectR=="Statut d’inscription : Désistement")) {
                             $emailSup = $hrpa->emailSup;
                             $flagSup = 1;
                             $msg->cc($emailSup);

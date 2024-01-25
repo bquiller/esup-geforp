@@ -10,20 +10,21 @@ parameters:
     front_url: '%env(front_host)%'
     front_host: '%env(front_host)%'
     back_host: '%env(back_host)%'
-    adresse_from_ldap: false
+    adresse_from_ldap: true
     corresp_form_actif: true
     lib_affectation : false
     relance_actif: true
     eval_actif: true
+    multi_etab_actif: false
     eval_critere_0_actif: true
     eval_critere_1: "Pas du tout d'accord"
     eval_critere_2: "Pas vraiment d'accord"
     eval_critere_3: "Plutôt d'accord"
     eval_critere_4: "Tout à fait d'accord"
     eval_message: "Remarques à propos de cette formation "
-    contact_mail: ""
+    contact_mail: "formation@unimes.fr"
     adresse_site: ""
-    nom_etablissement: ""
+    nom_etablissement: "Université de Nîmes"
     wkhtmltopdf_bin: ../bin/wkhtmltopdf-amd64
     unoconv_bin: ../bin/unoconv
     shibboleth:
@@ -435,3 +436,7 @@ services:
 
     shibbundle.admin_sup_service:
         class: App\Bundle\AdminShibbolethBundle\Security\User\AdminShibbolethUserProvider
+
+    phpspreadsheet:
+        class: PhpOffice\PhpSpreadsheet\Spreadsheet
+        public: true

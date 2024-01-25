@@ -141,6 +141,7 @@ class InscriptionListener implements EventSubscriber
                 $body = "Bonjour,\n" .
                     "Le statut de l'inscription de " . $inscription->getTrainee()->getFullName() . ' à la session du ' . $inscription->getSession()->getDateBegin()->format('d/m/Y') . "\nde la formation intitulée '" . $inscription->getSession()->getTraining()->getName() . "'\n"
                     . "est passé à '" . $status->getName() . "'.\n"
+		    . "Le supérieur hiérarchique renseigné est ".$inscription->getTrainee()->getFirstnamesup().' '.$inscription->getTrainee()->getLastnamesup() . "\n"
                     . "Le calendrier de la session est le suivant : \n" . $Texte;
 
                 $message = (new Email())

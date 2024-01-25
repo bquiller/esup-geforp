@@ -13,6 +13,7 @@
                 <li><a href="{{ path('front.account.team.registrations') }}" title="Pour gérer les demandes d'inscription en cours et retrouver les anciennes demandes" class="button secondary">Demandes d'inscription</a></li>
                 <li><a href="{{ path('front.account.team.trainees') }}" title="Pour retrouver tous les agents supervisés et accéder à leur historique de formation" class="button secondary">Mes agents</a></li>
                 <li class="active"><a href="{{ path('front.account.team.trainees') }}" title="Pour accéder l'historique de formation d'un agent" class="button secondary">{{ trainee.fullname }}</a></li>
+                <li><a href="/guide-geforp-responsables.pdf" target="_blank" class="button secondary">Guide d'utilisation pour les responsables</a></li>
             </ul>
         </div>
     </header>
@@ -35,7 +36,7 @@
                 </section>
                 {% set flagUp = 0 %}
                 <section>
-                    <h3><i class="glyphicon glyphicon-folder-close"></i>&nbsp;&nbsp;<span>Liste des inscriptions qui ont été suivies</span></h3>
+                    <h3><i class="glyphicon glyphicon-folder-close"></i>&nbsp;&nbsp;<span>Liste des formations qui ont été suivies</span></h3>
                     {% if pastEffective is not defined or pastEffective | length == 0 %}
                         <blockquote class="small">Il n'y a aucune formation suivie par cet agent.</blockquote>
                     {% else %}

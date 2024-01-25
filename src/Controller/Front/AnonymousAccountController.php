@@ -234,8 +234,9 @@ class AnonymousAccountController extends AbstractController
                 $pos = stripos($spCorp, "{NCORPS}");
                 if ($pos !== false) {
                     $corps = ltrim($spCorp, "{NCORPS}");
-                    if (ctype_digit($corps))
-                        $corps = (int)$corps;
+		    // BRICE : ne fonctionne pas pour les corps commencant par 0
+                    //if (ctype_digit($corps))
+                        //$corps = (int)$corps;
                     $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                         array('corps' => $corps)
                     );
@@ -278,8 +279,9 @@ class AnonymousAccountController extends AbstractController
                 $pos = stripos($spCorp, "{NCORPS}");
                 if ($pos !== false) {
                     $corps = ltrim($spCorp, "{NCORPS}");
-                    if (ctype_digit($corps))
-                        $corps = (int)$corps;
+		    // BRICE : pour les corps commencant par 0
+                    // if (ctype_digit($corps))
+                        // $corps = (int)$corps;
                     $n_corps = $this->getDoctrine()->getRepository('App\Entity\Back\Corps')->findOneBy(
                         array('corps' => $corps)
                     );

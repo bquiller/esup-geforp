@@ -47,6 +47,29 @@ class Presencestatus extends AbstractTerm implements VocabularyInterface
     }
 
     /**
+     * @var int
+     * @ORM\Column(name="machine_name", type="string", length=255)
+     * @Serializer\Groups({"Default", "api"})
+     */
+    protected $machinename;
+
+    /**
+     * @param int $machinename
+     */
+    public function setMachinename($machinename)
+    {
+        $this->machinename = $machinename;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMachinename()
+    {
+        return $this->machinename;
+    }
+
+    /**
      * @param int $status
      */
     public function setStatus($status)

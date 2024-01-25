@@ -5,7 +5,7 @@
                 <!-- time  -->
                 <time class="session__date">
                     {% if session.sessiontype == "A venir" %}
-                        {{ session.datebegin | date('F') | trans }} {{ session.datebegin | date('Y') }}
+			{{ session.getSemesterLabel() }}
                     {% else %}
                     {{ session.datebegin | date('l') | trans }} {{ session.datebegin | date('d') }} {{ session.datebegin | date('F') | trans }} {{ session.datebegin | date('Y') }}
 {#                     <br><span class="session__moment">

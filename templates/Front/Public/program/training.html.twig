@@ -67,7 +67,7 @@
                                                 {% if upcomingSession.sessionType != "A venir" %}
                                                     {{ upcomingSession.dateBegin | date('l') | trans }} {{ upcomingSession.dateBegin | date('d') }} {{ upcomingSession.dateBegin | date('F') | trans }} {{ upcomingSession.dateBegin | date('Y') }}
                                                 {%  else %}
-                                                    {{ upcomingSession.dateBegin | date('F') | trans }} {{ upcomingSession.dateBegin | date('Y') }}
+						    {{ session.getSemesterLabel() }}
                                                 {% endif %}
                                             </a>
                                         </p>

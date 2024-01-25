@@ -27,6 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use App\Utils\TrainingBalanceSheet;
 
 /**
  * @Route("/training")
@@ -307,11 +308,11 @@ abstract class AbstractTrainingController extends AbstractController
     /**
      * @Route("/{id}/bilan.{_format}", requirements={"id" = "\d+"}, name="training.balancesheet", options={"expose"=true}, defaults={"_format" = "xls"}, requirements={"_format"="csv|xls|xlsx"})
      * @Method("GET")
-     * @ParamConverter("training", class="SygeforTrainingBundle:Training\AbstractTraining", options={"id" = "id"})
+     * // ParamConverter("training", class="SygeforTrainingBundle:Training\AbstractTraining", options={"id" = "id"})
      */
     public function balanceSheetAction(AbstractTraining $training)
     {
-        $bs = new TrainingBalanceSheet($training, $this->get('phpexcel'), $this->container);
+        $bs = new TrainingBalanceSheet($training, $this->container);
 
         return $bs->getResponse();
     }
@@ -368,7 +369,7 @@ abstract class AbstractTrainingController extends AbstractController
                 }
             }
             $tabAggs['semester']['buckets'] = $tabSemesters;
-        }
+	}
 
         // CONSTRUCTION THEMES
         if(isset( $aggs['theme.name'])){

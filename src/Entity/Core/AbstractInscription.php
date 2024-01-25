@@ -64,6 +64,7 @@ abstract class AbstractInscription implements SerializedAccessRights
      * @Assert\NotNull(message="Vous devez spécifier un status d'inscription.")
      * @Serializer\Groups({"Default", "api"})
      */
+     // * @Assert\NotNull(message="Vous devez spécifier un status d'inscription.")
     protected $inscriptionstatus;
 
     /**

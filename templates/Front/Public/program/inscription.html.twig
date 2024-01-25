@@ -13,7 +13,7 @@
                         {% if session.sessionType != "A venir" %}
                             du {{ session.dateBegin | date('d/m/Y') }}
                         {% else %}
-                            de {{ session.dateBegin | date('F') | trans }} {{ session.dateBegin | date('Y') }}
+			    du {{ session.getSemesterLabel() }}
                         {% endif %}
                     </h1>
                 </div>

@@ -71,7 +71,7 @@ class PublicController extends AbstractController
     }
 
     /**
-     * @Route("/faq", name="front.public.faq")
+     * @Route("/faq", name="front.public.faq", options={"expose"=true})
      * @Template("Front/Public/faq.html.twig")
      */
     public function faqAction(Request $request)

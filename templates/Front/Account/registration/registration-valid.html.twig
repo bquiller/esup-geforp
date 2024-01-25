@@ -35,7 +35,7 @@
 
               {{ form_start(form) }}
               <span onclick="afficher()"> {{ form_row(form.children.validation) }} </span>
-              <div id="refuse" style="display: none"> {{ form_row(form.children.refuse) }}</div>
+              <div id="refuse" style="display: block"> {{ form_row(form.children.refuse) }}</div>
 
               <div class="form-group">
                 <div class="col-md-12">
@@ -73,7 +73,7 @@
     <script>
         function afficher() {
             if (document.getElementById('authorization_validation_0').checked == true) {
-                document.getElementById('refuse').style.display='none';
+                document.getElementById('refuse').style.display='block';
             }
             else{
                 document.getElementById('refuse').style.display='block';

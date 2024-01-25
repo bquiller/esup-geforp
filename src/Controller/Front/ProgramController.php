@@ -222,23 +222,6 @@ class ProgramController extends AbstractController
             $inscription = new Inscription();
             $inscription->setTrainee($trainee);
             $inscription->setSession($session);
-            $datesInsc = ['begin' => $session->getDatebegin(), 'end' => $session->getDateend()];
-
-            // Recuperation des inscriptions du stagiaire pour vérifier les dates de chevauchement
-            $inscriptionsTrainee = $doctrine->getManager()->getRepository('App\Entity\Core\AbstractInscription')->findBy(array(
-                'trainee' => $trainee
-            ));
-
-            // Test dates des sessions des inscriptions existantes
-            foreach ($inscriptionsTrainee as $insc) {
-                if (($insc->getSession()->getDatebegin() > $datesInsc['end']) || ($insc->getSession()->getDateend() < $datesInsc['begin'])) {
-                    // pas de chevauchement possible
-                }else {
-                    // chevauchement possible
-                    $libelleinsc = $insc->getSession()->getName();
-                    $this->get('session')->getFlashBag()->add('error', 'Attention : les dates de cette session peuvent chevaucher une session pour laquelle vous avez déjà réalisé une inscription !');
-                }
-            }
         }
         $inscription->setInscriptionstatus(
             $doctrine->getRepository('App\Entity\Term\Inscriptionstatus')->findOneBy(
@@ -267,12 +250,6 @@ class ProgramController extends AbstractController
         }
 
         if ($flagInsc==1) {
-            // Ajout affichage supérieur hiérarchique s'il existe
-            if (($trainee->getFirstnamesup() !== null) && ($trainee->getLastnamesup())) {
-                $sup = $trainee->getFirstnamesup() . " " . $trainee->getLastnamesup();
-                $this->get('session')->getFlashBag()->add('warning', 'Le supérieur hiérarchique que vous avez renseigné est ' . $sup . '. Si ce n\'est pas la bonne personne, merci de mettre à jour la donnée dans le menu "Mon compte", onglet "Mon profil".');
-            }
-
             $form = $this->createForm(InscriptionType::class, $inscription);
             if ($request->getMethod() === 'POST') {
                 $form->handleRequest($request);
@@ -345,6 +322,9 @@ class ProgramController extends AbstractController
                             'inscriptionId' => $inscription->getId())
                     );
                 }
+
+                $sup = $inscription->getTrainee()->getFirstnamesup() . " " . $inscription->getTrainee()->getLastnamesup();
+                $this->get('session')->getFlashBag()->add('warning', 'Le supérieur hiérarchique que vous avez renseigné est ' . $sup . '. Si ce n\'est pas la bonne personne, merci de mettre à jour la donnée dans le menu "Mon compte", onglet "Mon profil".');
             }
 
 
@@ -356,13 +336,13 @@ class ProgramController extends AbstractController
                 'token' => $token,
                 'flag' => $flagInsc
             );
-        } else {
+        }
+        else {
             //$this->get('session')->getFlashBag()->add('error', "Vous ne pouvez pas vous inscrire à cette session car vous ne faites pas partie des publics cibles autorisés à s'inscrire.");
             return array(
                 'user' => $trainee,
                 'training' => $training,
                 'session' => $session,
-                'token' => $token,
                 'flag' => $flagInsc
             );
         }
@@ -461,6 +441,8 @@ class ProgramController extends AbstractController
     public function myProgramAction(Request $request, ManagerRegistry $doctrine, SessionRepository $sessionRepository)
     {
         $user = $this->getUser();
+	// BRICE pour debug shib
+	// var_dump($user);
         $arTrainee = $doctrine->getRepository('App\Entity\Back\Trainee')->findByEmail($user->getCredentials()['mail']);
         $etablissement = $arTrainee[0]->getInstitution()->getName();
 

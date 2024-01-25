@@ -214,15 +214,15 @@ class AbstractTraineeType extends AbstractType
                 } else { // Autres cas : saisie du responsable non obligatoire
                     $event->getForm()
                         ->add('lastnamesup', null, array(
-                            'required' => false,
+                            'required' => true,
                             'label' => 'Nom',
                         ))
                         ->add('firstnamesup', null, array(
-                            'required' => false,
+                            'required' => true,
                             'label' => 'Prénom',
                         ))
                         ->add('emailsup', null, array(
-                            'required' => false,
+                            'required' => true,
                             'label' => 'Email',
                             'attr' => array('placeholder' => 'Entrez le mail INSTITUTIONNEL de votre responsable hiérarchique')
                         ));

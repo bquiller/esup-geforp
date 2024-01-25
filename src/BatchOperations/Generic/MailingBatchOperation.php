@@ -889,6 +889,7 @@ class MailingBatchOperation extends AbstractBatchOperation implements BatchOpera
                             'stagaire.corps' => $insc->getTrainee()->getCorps(),
                             'stagiaire.bap' => $insc->getTrainee()->getBap(),
                             'stagiaire.fonction' => $insc->getTrainee()->getFonction(),
+			    'stagiaire.sup' => $insc->getTrainee()->getFirstnamesup().' '.$insc->getTrainee()->getLastnamesup(),
                             'statutInscription' => $insc->getInscriptionStatus()->getName(),
                             'statutPresence' => $insc->getPresenceStatus()->getName(),
                             'refus' => $insc->getRefuse(),
