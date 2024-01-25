@@ -38,12 +38,10 @@ class TrainingBalanceSheet
     private $container;
 
     /**
-     * PHPExcel object.
+     * $spreadsheet object.
      *
      * @var
      */
-    private $phpExcelObject;
-
     private $spreadsheet;
 
     /**
@@ -231,7 +229,6 @@ class TrainingBalanceSheet
     /**
      * Builds the balance sheet.
      *
-     * @throws \PHPExcel_Exception
      */
     protected function buildBalanceSheet()
     {
@@ -239,9 +236,6 @@ class TrainingBalanceSheet
 
         $currentRow = 1;
         $currentColumn = 'A';
-        /* @var  phpExcelObject */
-        $this->phpExcelObject = $this->spreadsheet->getProperties();
-
         $linebreaks = array();
 
         $this->spreadsheet->getProperties()->setCreator('Sygefor')
@@ -283,7 +277,6 @@ class TrainingBalanceSheet
         //storing line for later adding double thickness
         $linebreaks [] = $currentRow;
 
-        /** @var \PHPExcel_Worksheet $activeSheet */
         $activeSheet = $this->spreadsheet->setActiveSheetIndex(0);
 
         $activeSheet->getDefaultRowDimension()->setRowHeight(15);
