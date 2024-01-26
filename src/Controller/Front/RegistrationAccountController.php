@@ -106,7 +106,7 @@ class RegistrationAccountController extends AbstractController
      * @Route("/registration/{id}/desist", name="front.account.registration.desist")
      * @Template("Front/Account/registration/registration-desist.html.twig")
      */
-    public function desistAction($id, Request $request, ManagerRegistry $doctrine)
+    public function desistAction($id, Request $request, ManagerRegistry $doctrine, MailerInterface $mailer)
     {
         $user = $this->getUser();
         $arTrainee = $doctrine->getRepository('App\Entity\Back\Trainee')->findByEmail($user->getCredentials()['mail']);
@@ -142,6 +142,22 @@ class RegistrationAccountController extends AbstractController
                 // if the inscription is pending, just delete it
                 $em->remove($inscription);
                 $em->flush();
+		// On envoie un mail à la DRH
+		
+		$body = "Bonjour,\n" .
+			"L'inscription à la session du " . $registration->getSession()->getDatebegin()->format('d/m/Y') . "\nde la formation intitulée '" . $registration->getSession()->getTraining()->getName() . "'\n"
+                        . "a été annulée par " . $registration->getTrainee()->getFirstName() . " " . $registration->getTrainee()->getLastname() . "\n"
+                        . "-- ceci est un message automatique --";
+                $message = (new Email())
+			->from($registration->getSession()->getTraining()->getOrganization()->getEmail())
+                        ->replyTo($registration->getSession()->getTraining()->getOrganization()->getEmail())
+                        ->to($this->getParameter('contact_mail'))
+                        ->subject("Annulation d'inscription à une formation")
+                        ->text($body);
+
+		$mailer->send($message);
+		//
+
                 $this->get('session')->getFlashBag()->add('success', 'Votre désistement a bien été enregistré.');
                 return $this->redirectToRoute('front.account.registrations');
             }
